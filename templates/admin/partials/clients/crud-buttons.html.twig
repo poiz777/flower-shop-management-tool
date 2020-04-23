@@ -1,0 +1,8 @@
+<div class="pz-crud-buttons">
+	<a class="pz-crud-icon pz-edit" href="{{ path('rte_admin_edit_client', {"id": client.kundenid}) }}">
+		<span class="fa fa-pencil" data-tip="{{ client.Firma }} [ID: {{ client.kundenid }}] bearbeiten."></span>
+	</a>
+	<a class="pz-crud-icon pz-delete" href="{{ path('rte_admin_delete_client', {"id": client.kundenid}) }}">
+		<span class="fa fa-trash" data-tip="{{ client.Firma }} [ID: {{ client.kundenid }}] löschen."></span>
+	</a>
+</div>

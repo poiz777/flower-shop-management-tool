@@ -1,0 +1,118 @@
+{% set detailURL    = null %}
+{% set linkAll      = null %}
+{% set hideBHJColumn  = hideBHJColumn is defined ? hideBHJColumn : false %}
+<div class="table-responsive">
+	{# show the latter only if you are not in search mode... #}
+	
+	{% include 'partials/shared/filter-table.html.twig'  with {
+		"filterCssClass" : "",
+		"filterElement" : "td",
+		"affectedParentClass" : "pz-clients-tbody-row",
+		"affectedParentTag" : "tr",
+		"placeholder" : "Suchergebnisse weiterfiltern..."
+	} %}
+	<div id="Rechnungen_Liste" style="margin-top:25px">
+		{% set pdfURL   = pdfLink is defined and pdfLink ? pdfLink : "?export=pdf" %}
+		{% set csvURL   = csvLink is defined and csvLink ? csvLink : "?export=csv" %}
+		{% set jsonURL  = jsonLink is defined and jsonLink ? jsonLink : "?export=json" %}
+		{% set showPrint  = showPrint is defined ? showPrint : true %}
+		
+		{% include 'partials/shared/export.html.twig' with {
+			"csvLink" : csvURL,
+			"pdfLink" : pdfURL,
+			"showPrint" : showPrint,
+			"jsonLink" : jsonURL
+		} %}
+	</div>
+	
+	{% if showPagination %}
+		<div class="pz-clients-grid last pz-footer-grid">
+			{{ buildIppDropDown(ipp, 10, 10, 100) }}
+			
+			{{ buildPaginationCount(ipp, billsCount) }}
+			{% include '/admin/partials/clients/pagination.html.twig' with {
+				'currentPage': currentPage,
+				'ipp': ipp,
+				'billsCount': billsCount,
+			} %}
+		</div>
+	{% endif %}
+	
+	<table class="table table-bordered table-striped table-hover strip-fa-icons-on-print">
+		<thead class="pz-clients-thead first pz-tbl-heading">
+			<tr class="pz-clients-thead-row first pz-tbl-heading-row">
+				<th>Datum&nbsp;
+					<span class="fa fa-angle-up pz-sort-icon pz-sort-up pz-active active" data-sort-by="Rechnung_Datum_bez" data-sort-direction="asc"></span>
+					<span class="fa fa-angle-down pz-sort-icon pz-sort-down" data-sort-by="Rechnung_Datum_bez" data-sort-direction="desc"></span>
+				</th>
+				
+				<th>BHJ-Nr.&nbsp;
+					<span class="fa fa-angle-up pz-sort-icon pz-sort-up" data-sort-by="Rechnung_BHNr_bez" data-sort-direction="asc"></span>
+					<span class="fa fa-angle-down pz-sort-icon pz-sort-down" data-sort-by="Rechnung_BHNr_bez" data-sort-direction="desc"></span>
+				</th>
+				
+				<th>R-Nr.&nbsp;
+					<span class="fa fa-angle-up pz-sort-icon pz-sort-up" data-sort-by="Rechnung_nummer" data-sort-direction="asc"></span>
+					<span class="fa fa-angle-down pz-sort-icon pz-sort-down" data-sort-by="Rechnung_nummer" data-sort-direction="desc"></span>
+				</th>
+				
+				<th>Kundin&nbsp;
+					<span class="fa fa-angle-up pz-sort-icon pz-sort-up" data-sort-by="Firma,name,vorname" data-sort-direction="asc"></span>
+					<span class="fa fa-angle-down pz-sort-icon pz-sort-down" data-sort-by="Firma,name,vorname" data-sort-direction="desc"></span>
+				</th>
+				
+				<th class="no-print">Status&nbsp;
+					<span class="fa fa-angle-up pz-sort-icon pz-sort-up" data-sort-by="Rechnung_status" data-sort-direction="asc"></span>
+					<span class="fa fa-angle-down pz-sort-icon pz-sort-down" data-sort-by="Rechnung_status" data-sort-direction="desc"></span>
+				</th>
+				
+				<th>CHF</th>
+				
+				<th class="no-print">Actions</th>
+			</tr>
+		</thead>
+		<tbody class="pz-clients-tbl-body pz-tbl-tbody">
+			{% for bill in bills %}
+				{% set detailURL = path('rte_admin_closed_bill_details', {"id": bill.Rechnung_id}) %}
+				<tr class="pz-clients-tbody-row pz-tbl-tbody-row">
+					<td>
+						<span>{{ bill.Rechnung_Datum_bez | date('d.m.Y') }}</span>
+					</td>
+					
+					<td>
+						<span>{{ bill.Rechnung_BHNr_bez  | html | raw }}</span>
+					</td>
+					
+					<td>
+						<span>{{ bill.Rechnung_nummer  | html | raw }}</span>
+					</td>
+					
+					<td>
+						<a href="{{ detailURL }}">
+							<span>
+								{% if bill.Firma is not empty  %}
+									{% if bill.name is not empty  %}
+										( {{ bill.name | html | raw  }} )
+									{% endif %}
+									{{ bill.Firma | html | raw  }}
+								{% else %}
+									{{ bill.name | html | raw  }} {{ bill.vorname | html | raw  }}
+								{% endif %}
+							</span>
+						</a>
+					</td>
+					
+					<td class="no-print">
+						<span class="fa fa-circle status-{{ bill.Rechnung_status }}" data-tip="Status:<br /><strong class='status-{{ bill.Rechnung_status}}' style='text-shadow:1px 1px 1px black;'>{{ billStatusStringFromID(bill.Rechnung_status) }}</strong>"></span>
+					</td>
+					
+					<td>
+						<span>{{ bill.total  | abs }}</span>
+					</td>
+					{% set billType = billType is defined and billType ? billType : 'edit' %}
+					{% include '/partials/cash_register/crud-buttons-cell.html.twig' with {'bill': bill, 'billType': billType} %}
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>

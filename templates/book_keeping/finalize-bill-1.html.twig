@@ -1,0 +1,244 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}
+    {% include "utilities/page-title.html.twig" with { 'pageTitle': pageTitle } %}
+{% endblock %}
+
+{% block logo_img %}
+    {% include 'partials/shared/logo-box-@header.html.twig' %}
+{% endblock %}
+
+{% block top_header_right %}
+    {% include 'partials/shared/logout-box-@header.html.twig' %}
+{% endblock %}
+
+{% block top_css_block %}
+    <link rel="stylesheet" href="{{ asset('css/melanie.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/melanie-calendar-2.css') }}">
+    <script src="{{ asset('tinymce/js/tinymce/tinymce.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/TinyMceInit.js') }}"></script>
+    <style>
+        .pz-sub-page-heading,
+        #pz-sub-page-heading {
+            display:block;
+            padding: 8px 15px;
+            background: black;
+            color: white;
+            text-align: center;
+            margin-bottom: 0;
+            font-size: 1.25em;
+        }
+        
+        .pz-info-box-wrapper{
+            background: #f1f1f1;
+            padding: 15px;
+            border: solid 1px #e0e0e0;
+            margin-bottom: -10px;
+        }
+        
+        .pz-info-box-wrapper .pz-info-box{
+        
+        }
+        .pz-info-box-wrapper .pz-info-box h3 {
+            margin: 10px 0;
+            padding: 8px 0px;
+            display: inline-block;
+            border-top: dashed 1px #d2d2d2;
+            border-bottom: dashed 1px #d2d2d2;
+            color: #525252;
+            font-weight: 700;
+            font-size: 1.4em;
+        }
+        .table tr:nth-child(2n+1) {
+            border-color: #dddddd;
+            color:white;
+            background: #000000;
+        }
+        .table tr:nth-child(2n+1) td {
+            color:black;
+        }
+        .pz-wrapper .table-responsive .table-striped a {
+            text-align: left;
+        }
+    </style>
+{% endblock %}
+
+
+{% block full_width_content %}
+    <section id="pz-main-wrapper" class="pz-main-wrapper no-lr-pad containR">
+        <span class="no-print">{% include'partials/shared/scroll-to-top.html.twig' %}</span>
+        <section>
+            <section >
+                <div class="pz-time-tracker-wrapper col-md-12 no-lr-pad">
+                    <div class="col-md-12 no-lr-pad pz-form-wrapper" id="pz-form-wrapper">
+                        <section class="pz-form-centered">
+                            <div style="clear: both;"></div>
+                            
+                            <div class="col-md-12 no-lr-pad pz-wrapper-main" id="pz-wrapper-main">
+                                <div class="no-print">{% include '/admin/partials/navigation.html.twig' with {'navPayload': navPayload}  %}</div>
+                                <header class="pz-page-title-header no-print">
+                                    <h1 class="pz-page-title">{{ pageTitle | html }}</h1>
+                                    {# include 'partials/shared/delete-current-item-being-edited.html.twig' with {"clientID": clientID} #}
+                                </header>
+                                
+                                {% include'partials/flash-message.render.html.twig' %}
+                                <div class="pz-wrapper">
+                                    {% if billData is defined and billData %}
+                                        <div id="Rechnung_detail">
+                                            {# <h1 class="noprint">Rechnung bearbeiten</h1> #}
+                                            <h2 class="noprint no-print pz-sub-page-heading">Aktueller Rechnungsentwurf</h2>
+                                            
+                                            <section class="bill-client-address-wrapper" id="bill-client-address-wrapper">
+                                                {# Das div Rechnung_layout wird eröffnet, mit dem die online- und print-Version der Rechnung formatiert wird #}
+                                                <div id="Rechnung_layout">
+                                                    {% set kundennummer = billData.kundenid  %}
+                                                    {# Auslesen der Empfängeradresse und schreiben in die Session-Variable print_empfaenger #}
+                                                    {% include "partials/book_keeping/bill-recepient-info.html.twig" with {"billData": billData } %}
+                                                    
+                                                    {% if hideForms  %}
+                                                    {% endif  %}
+    
+                                                    {% if showBillNumber %}
+                                                        <div class="no-print">
+                                                            <strong class="pz-bill-number-pod">
+                                                                <span class="fa fa-angle-right"></span>&nbsp;&nbsp;Rechnung Nr. {{ billData.Rechnung_nummer }}</strong>
+                                                        </div>
+                                                    {% endif  %}
+                                                </div>
+    
+                                                <div class="no-print"></div>
+                                                {# {% include "partials/book_keeping/qr-code.html.twig" with {'targetMedia': 'screen', 'qrCodeURL': qrCodeURL}  %} #}
+                                            </section>
+                                            
+                                            <div class="print-only" style="clear:both; width:100%;margin-bottom:25px;">
+                                                {% if billData.Rechnung_Datum_bill is defined %}
+                                                    <article class="pz-recipient-slot pz-rcp-date" style="margin-bottom:15px;"><span class="pz-bill-date"><strong>Bern</strong>, {{ billData.Rechnung_Datum_bill | fullSwissDate }}</span></article>
+                                                {% endif %}
+                                                {% if billData.Rechnung_nummer is defined %}
+                                                    <article class="pz-recipient-slot pz-rcp-bill-num"><strong class="pz-bill-num">Rechnung Nr. {{ billData.Rechnung_nummer | html | raw  }} </strong></article>
+                                                {% endif%}
+    
+                                                {# {% include "partials/book_keeping/qr-code.html.twig" with {'targetMedia': 'print', 'qrCodeURL': qrCodeURL}  %}  #}
+                                            </div>
+                                            {# MOVE THE BOTTOM BIT INTO AN OWN PARTAL... #}
+                                            <div class="table-responsive">
+                                                
+                                                <div id="Rechnungen_Liste" style="margin-top:25px" class="no-print">
+                                                    {% include 'partials/shared/filter-table.html.twig'  with {
+                                                        "filterCssClass" : "",
+                                                        "filterElement" : "td",
+                                                        "affectedParentClass" : "pz-clients-tbody-row",
+                                                        "affectedParentTag" : "tr",
+                                                        "placeholder" : "Suchergebnisse weiterfiltern..."
+                                                    } %}
+                                                    
+                                                    {% set pdfURL   = pdfLink is defined and pdfLink ? pdfLink : "?export=pdf" %}
+                                                    {% set csvURL   = csvLink is defined and csvLink ? csvLink : "?export=csv" %}
+                                                    {% set jsonURL  = jsonLink is defined and jsonLink ? jsonLink : "?export=json" %}
+                                                    {% include 'partials/shared/export.html.twig' with {
+                                                        "csvLink" : csvURL,
+                                                        "pdfLink" : pdfURL,
+                                                        "showPrint" : true,
+                                                        "jsonLink" : jsonURL
+                                                    } %}
+                                                </div>
+                                                <table class="table-bordered table-striped table-condensed table table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Datum</th>
+                                                        <th>Kategorie</th>
+                                                        <th>Bezeichnung</th>
+                                                        <th class="w-15">Betrag</th>
+                                                        <th class="w-5 no-print">Status</th>
+                                                        <th class="no-print w-20">Actions</th>
+                                                    </tr>
+                                                    </thead>
+                                                    {% if clientBills is defined and clientBills %}
+                                                        {% set total = 0 %}
+                                                        {% set date = 0 %}
+                                                        <tbody>
+                                                        {% for clientBill in clientBills %}
+                                                            {% set date = clientBill.BH_Journal_datum | date('Y-m-d') %}
+                                                            {% set total = total + clientBill.BH_Journal_betrag %}
+                                                            <tr class="pz-clients-tbody-row">
+                                                                <td>{{ clientBill.BH_Journal_datum | date('d.m.Y') }}</td>
+                                                                <td>{{ clientBill.kat_name | html | raw }}</td>
+                                                                <td>{{ clientBill.BH_Journal_kommentar | html | raw }}</td>
+                                                                <td>CHF {{ clientBill.BH_Journal_betrag | html | raw }}</td>
+                                                                <td class="no-print status">
+                                                                    <span class="fa fa-circle status-{{ clientBill.Rechnung_status}}" data-tip="<strong class='status-{{ clientBill.Rechnung_status}}' style='text-shadow:1px 1px 1px black;'>{{ billStatusStringFromID(clientBill.Rechnung_status) }}:</strong><br />Anklicken um <br />automatisch zu wechseln."></span>
+                                                                </td>
+                                                                <td class="no-print">
+                                                                    {% if rechnungID and clientBill.BH_Journal_id %}
+                                                                        <a href="{{ path('rte_admin_track_open_bill', {'id': rechnungID, 'bhj_id': clientBill.BH_Journal_id , 'date': clientBill.BH_Journal_datum | date('Y-m-d'), 'intent': 'edit_single_bill' }) }}"><span class="fa fa-pencil"></span></a>
+                                                                        <a href="{{ path('rte_admin_delete_bill_post', {'id': rechnungID, 'bhj_id': clientBill.BH_Journal_id , 'date': clientBill.BH_Journal_datum | date('Y-m-d'), 'intent': 'trash_single_bill' }) }}"
+                                                                           data-warn-b4-delete="1"
+                                                                           data-tip="Rechnung Post<br>mit <strong>BHJ ID: {{ clientBill.BH_Journal_id }}</strong><br /><strong style='color:red'>löschen.</strong>"
+                                                                           data-delete-question="Möchtest Du diesen Rechnung Post mit mit BHJ ID: {{  clientBill.BH_Journal_id }} wirklich <strong style='color:red'>löschen?</strong>" ><span class="fa fa-trash"></span></a>
+                                                                    {% endif %}
+                                                                </td>
+                                                            </tr>
+                                                        {% endfor %}
+                                                        </tbody>
+                                                        <tfoot>
+                                                        <tr>
+                                                            <th>Total</th>
+                                                            <th>&nbsp;</th>
+                                                            <th>&nbsp;</th>
+                                                            <th>CHF {{ total }}</th>
+                                                            <th class="no-print">&nbsp;</th>
+                                                            <th class="no-print">&nbsp
+                                                                {#
+                                                                <a href="javascript:window.history.back();"><span class="fa fa-chevron-left"></span></a>
+                                                                <a href="{{ path('rte_admin_finalize_bill', {'id': rechnungID, 'date': date}) }}"><span class="fa fa-paper-plane"></span></a>
+                                                                #}
+                                                            </th>
+                                                        </tr>
+                                                        </tfoot>
+                                                    {% endif %}
+                                                </table>
+                                                <!-- Conditions: -->
+                                                {% if billData.Rechnung_konditionen is defined %}
+                                                    <div class="print-only">{{ billData.Rechnung_konditionen | html | raw }}</div>
+                                                {% endif  %}
+                                                {% if billData.Rechnung_dank is defined %}
+                                                    <div class="print-only" style="margin-top:10px;">{{ billData.Rechnung_dank | html | raw }}</div>
+                                                {% endif %}
+                                                <!-- Conditions: -->
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                    
+                                    <div class="no-print">
+                                        {% set formTitle = (formTitle is defined and formTitle) ? formTitle : 'Neuen Rechnungsposten hinzufügen' %}
+                                        <h5 id="pz-sub-page-heading" class="pz-sub-page-heading">{{ formTitle }}</h5>
+                                        {% include 'partials/shared/form/dynamic-form.html.twig' with {
+                                            "btnText": btnText,
+                                            "formWidgets": formWidgets
+                                        } %}
+                                    </div>
+                                
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </section>
+{% endblock %}
+
+{% block footer %}
+    <div class="no-print">{% include '/admin/partials/footer.html.twig' %}</div>
+{% endblock %}
+
+{% block footer_scripts %}
+    <script type="text/javascript" src="{{ asset('js/jquery-3.1.0.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery.easing.1.3.js') }}"></script>
+    
+    <script type="text/javascript" src="{{ asset('js/jquery.poiz_tooltip.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/pz_melli.js') }}"></script>
+    
+    <script>
+    </script>
+{% endblock %}

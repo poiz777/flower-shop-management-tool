@@ -1,0 +1,32 @@
+{% for knowledgeData in knowledgeBaseData %}
+	<div class="pz-knowledge-strip-box">
+		<h4 class="pz-knowledge-group">{{ knowledgeData.categoryName }}</h4>
+		{% if knowledgeData.children is defined and knowledgeData.children %}
+			{% for knowledge in knowledgeData.children %}
+				{% set detailURL    = path('rte_show_knowledge_base_detail', { 'id':knowledge.id }) %}
+				{% set deleteURL    = path('rte_delete_knowledge_base_entry', { 'id':knowledge.id }) %}
+				{% set editURL      = path('rte_edit_knowledge_base_entry', { 'id':knowledge.id }) %}
+				{% set activeLink   = '' %}
+				{% if inRoutePath(detailURL, app.request.requestUri)   %}
+					{% set activeLink = 'active pz-active' %}
+				{% endif %}
+				
+				<aside class="pz-knowledge-strip {{ activeLink }}">
+					<a class="pz-knowledge-link {{ activeLink }}"
+					   data-tip="Details WDB Eintrag - <br />Nr. {{ knowledge.id }} <strong style='color:darkgreen;'>anzeigen.</strong>"
+					   href="{{ detailURL }}"><span class="fa fa-link"></span> <span class="pz-filter-text">{{ knowledge.name }}</span></a>
+					<span class="pz-action-group">
+						<a href="{{ editURL }}"
+						   data-tip="WDB Eintrag - <br />Nr. {{ knowledge.id }}<br /><strong style='color:darkgreen;'>bearbeiten.</strong>"
+						   class="fa fa-pencil"></a>
+						<a href="{{ deleteURL }}"
+						   data-tip="WDB Eintrag - <br />Nr. {{ knowledge.id }}<br /> aus den Wissen-DB <br /><strong style='color:red'>entfernen.</strong>"
+						   data-warn-b4-delete="1"
+						   data-delete-question="Möchtest Du wirklich dieser WDB Eintrag - Nr. {{ knowledge.id }} aus den Wissen-DB <strong style='color:red'>entfernen?</strong>"
+						   class="fa fa-trash"></a>
+					</span>
+				</aside>
+			{% endfor %}
+		{% endif %}
+	</div>
+{% endfor %}

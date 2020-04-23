@@ -1,0 +1,4 @@
+<a href="{{ path('rte_admin_individual_statistics', {'cid': data.kundenid, 'start': dateXDaysAgo(30), 'end': currentCalendarDate() }) }}"><strong>{% include '/partials/statistics/client-company-name.html.twig' with {'data': data} %}</strong></a><br>
+<span class="pz-sale-date">{{data.verkaufdatum | swissDate }}</span>
+&nbsp;&nbsp;<span class="fa fa-long-arrow-right"></span>&nbsp;&nbsp;
+<span class="pz-sale-time">{{data.verkaufzeit  }}</span>

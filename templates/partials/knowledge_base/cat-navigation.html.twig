@@ -1,0 +1,30 @@
+<div class="pz-knowledge-strip-box">
+	{# {{ pzDump(knowledgeBaseData) }} #}
+	{% for knowledge in knowledgeBaseData %}
+		{# {{ pzDump(knowledge) }} #}
+		
+		{# <h4 class="pz-knowledge-group">{{ knowledgeData.categoryName }}</h4> #}
+		{# {% set detailURL    = path('rte_show_knowledge_base_detail', { 'id':knowledge.knowledge_kategorieID }) %} #}
+		{% set deleteURL    = path('rte_delete_knowledge_base_category', { 'id':knowledge.knowledge_kategorieID }) %}
+		{% set editURL      = path('rte_edit_knowledge_base_category', { 'id':knowledge.knowledge_kategorieID }) %}
+		{% set activeLink   = '' %}
+		{% if inRoutePath(editURL, app.request.requestUri)   %}
+			{% set activeLink = 'active pz-active' %}
+		{% endif %}
+		<aside class="pz-knowledge-strip {{ activeLink }}">
+			<a class="pz-knowledge-link {{ activeLink }}"
+			   data-tip="WDB Kategorie - Nr. {{ knowledge.knowledge_kategorieID }}<br /><strong><em>{{ knowledge.knowledge_kategoriename }}</em></strong><br/><strong style='color:darkgreen;'>bearbeiten.</strong>"
+			   href="{{ editURL }}"><span class="fa fa-link"></span> <span class="pz-filter-text">{{ knowledge.knowledge_kategoriename }}</span></a>
+			<span class="pz-action-group">
+				<a href="{{ editURL }}"
+				   data-tip="WDB Kategorie - Nr. {{ knowledge.knowledge_kategorieID }}<br /><strong>{{ knowledge.knowledge_kategoriename }}</strong><br /><strong style='color:darkgreen;'>bearbeiten.</strong>"
+				   class="fa fa-pencil"></a>
+				<a href="{{ deleteURL }}"
+				   data-tip="WDB Kategorie  - Nr. {{ knowledge.knowledge_kategorieID }}<br /><strong>{{ knowledge.knowledge_kategoriename }}</strong><br /> aus den Wissen-DB <br /><strong style='color:red'>entfernen.</strong>"
+				   data-warn-b4-delete="1"
+				   data-delete-question="Möchtest Du wirklich dieser WDB Kategorie - Nr. {{ knowledge.knowledge_kategorieID }} (<strong><em>{{ knowledge.knowledge_kategoriename }}</em></strong>) aus den Wissen-DB <strong style='color:red'>entfernen?</strong>"
+				   class="fa fa-trash"></a>
+			</span>
+		</aside>
+	{% endfor %}
+</div>

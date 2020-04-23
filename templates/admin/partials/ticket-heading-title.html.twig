@@ -1,0 +1,32 @@
+{% set clientEditURI =  path("rte_admin_ticket_detail", {'id' : ticket.ticket_id}) %}
+{% set postsCountString = "" %}
+{% set gridColCount     = ticket.ticket_knowledgeID > 0 ? "4" : "3" %}
+{% if ticket.ticketPostsCount is defined and ticket.ticketPostsCount %}
+	{% set postsCountString = (ticket.ticketPostsCount > 1) ? "#{ticket.ticketPostsCount} Ticketposten" : "#{ticket.ticketPostsCount} Ticketpost" %}
+{% endif %}
+
+{% if ticket.client.kundenid is defined and ticket.client.kundenid %}
+	{% set clientEditURI = path("rte_admin_edit_client", {'id' : ticket.client.kundenid}) %}
+{% endif %}
+
+
+<h4 class="pz-ticket-title pz-{{ evenOdd }} {{ evenOdd }} pz-ticket-title-ticket-type-{{ ticket.ticket_typ }} pz-ticket-title-ticket-status-{{ ticket.ticket_status }}">
+<span class="fa fa-cog pz-ticket-status pz-ticket-status-{{ ticket.ticket_status }} pz-ticket-priority-{{ ticket.ticket_prio }}"
+     data-tip="Status:<br /><strong style='text-shadow:0 1px 0 rgba(0,0,0,0.3);' class='pz-ticket-status-{{ ticket.ticket_status }}'>{{ ticketStatusStringFromID(ticket.ticket_status) }}</strong><br />Typ:<br /><strong style='text-shadow:0 1px 0 rgba(0,0,0,0.3);' class='pz-ticket-status-{{ ticket.ticket_status }}'>{{ ticketTypeStringFromID(ticket.ticket_typ) }}</strong>"></span>
+<span class="fa fa-pencil pz-edit-ticket-btn" data-tid="{{ ticket.ticket_id }}" data-tip="Ticket Nr.{{ ticket.ticket_id }}<br />«{{ ticket.ticket_header | raw }}»<br/> bearbeiten"></span>
+{% if ticket.ticket_knowledgeID > 0 %}
+<a href="{{ path("rte_show_knowledge_base_detail", {'id': ticket.ticket_knowledgeID }) }}"
+   class="pz-ticket-wdb-link"
+   data-tip="Details des<br/><strong>Wisseneintrags</span> Nr. {{  ticket.ticket_knowledgeID }}</strong><br /><strong style='color:darkgreen;'>anzeigen</strong>">
+<span class="fa fa-puzzle-piece" style="color: black;"></span></a>
+{% endif %}
+<a href="{{ path("rte_admin_ticket_detail", {'id' : ticket.ticket_id}) }}" class="pz-ticket-heading" style="grid-column: {{ gridColCount }} / 23;">
+{% if postsCountString %}<span class="pz-cnt pz-ticket-posts-count">{{ postsCountString}}</span>&nbsp;&nbsp;{% endif %}
+{{ ticket.ticket_header | striptags('strong,br') }}</a>
+<a href="{{ clientEditURI }}"
+   class="pz-ticket-client"
+   data-tip="{{ buildClientInfoBlock(ticket.client) }}">
+	<span class="fa fa-angle-double-right"></span>&nbsp;&nbsp;<strong>{{ getTicketTargetClient(ticket.client) }}</strong></a>
+<span class="fa fa-angle-down pz-toggle-ticket-view" data-tip="Ansicht umschalten"></span>
+</h4>
+{# &#8224; => Dagger &#183; => Middot fa-paperclip  #}

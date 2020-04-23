@@ -1,0 +1,17 @@
+{% block top_css_block %}
+	<style>
+		a.pz-logout-link {
+			color: #636363;
+			font-weight: 700;
+		}
+	</style>
+{% endblock %}
+{% if app.user.friendlyName is defined %}
+	{% set appUser = (user is defined) ? user.friendlyName : app.user.friendlyName %}
+	<div class="pz-user-status" id="pz-user-status">
+		<span class="fa fa-user"></span> {{ greet() }}, <strong>{{ appUser | ucFirst }}!</strong> &nbsp;&nbsp;|&nbsp;&nbsp;
+		<a href="{{ path('app_logout') }}" class="pz-logout-link">
+			<span class="fa fa-sign-out"></span> Logout
+		</a>
+	</div>
+{% endif %}

@@ -1,0 +1,236 @@
+body{
+    font-family: 'PT Sans Narrow', 'Dosis', 'Ubuntu Condensed', 'Open Sans Condensed', sans-serif;
+    background: transparent;
+    letter-spacing: 0.03em;
+}
+@page {
+    size: A4 portrait;
+    @bottom-center{
+        content: 'MJR Blumen, Bern';
+        content: "Page " counter(page);
+        color: red;
+        font-size:30px;
+        border: solid green;
+    }
+}
+
+.footer-space{
+    height: 30mm;
+}
+.header-space{
+    height: 22mm;
+}
+.containX{
+    width: 100%;
+    margin: 0 auto;
+}
+
+#print-header{
+    position: fixed;
+    top:0;
+    left: 0;
+    width: 100%;
+}
+#bill-conditions{
+    padding-top: 12mm;
+}
+
+#bill-thank-you{}
+
+.table-responsive,
+div.table-responsive{
+    overflow-x: hidden !important;
+    min-height: auto !important;
+}
+
+#print-block-table.table>tbody>tr>td,
+#print-block-table.table>tbody>tr>th,
+#print-block-table.table>tfoot>tr>td,
+#print-block-table.table>tfoot>tr>th,
+#print-block-table.table>thead>tr>td,
+#print-block-table.table>thead>tr>th {
+    padding: 8px;
+    vertical-align: top;
+    border-top: none;
+}
+
+table,
+table.table-bordered.table,
+table.table-bordered.table>tbody>tr>td,
+table.table-bordered.table>tbody>tr>th,
+table.table-bordered.table>tfoot>tr>td,
+table.table-bordered.table>tfoot>tr>th,
+table.table-bordered.table>thead>tr>td,
+table.table-bordered.table>thead>tr>th {
+    border: none !important;
+}
+
+table.table-bordered.table>tfoot>tr:last-child>td,
+table.table-bordered.table>tfoot>tr:last-child>th,
+
+table.table-bordered.table>thead>tr:last-child>td,
+table.table-bordered.table>thead>tr:last-child>th,
+
+table.table-bordered.table>tfoot>tr:first-child>td,
+table.table-bordered.table>tfoot>tr:first-child>th,
+
+table.table-bordered.table>thead>tr:first-child>td,
+table.table-bordered.table>thead>tr:first-child>th{
+    border-top: solid 1px #bbbbbb !important;
+    border-bottom: solid 1px #bbbbbb !important;
+    background-color: #e2e2e2 !important;
+    background: #e2e2e2 !important;
+}
+
+table.table-bordered.table>tbody>tr:last-child>td{
+    border-top: solid 1px #bbbbbb !important;
+    border-bottom: solid 1px #bbbbbb !important;
+    background-color: #e2e2e2 !important;
+    background: #e2e2e2 !important;
+}
+
+
+table.table-bordered.table>tfoot>tr>td,
+table.table-bordered.table>tfoot>tr>th,
+table.table-bordered.table>thead>tr>td,
+table.table-bordered.table>thead>tr>th{
+    background-color: #e2e2e2 !important;
+    background: #e2e2e2 !important;
+}
+
+h1 {
+    page-break-before: always;
+}
+
+div.table-responsive.bill-client-info-wrapper .table.hundred-percent{
+    width: 100%;
+    overflow-x: hidden;
+}
+
+.left-cell-empty,
+div.table-responsive.bill-client-info-wrapper .table.hundred-percent .left-cell-empty{
+    display: table-cell !important;
+    width: 55% !important;
+    background:none;
+    border:none;
+}
+
+div.table-responsive.bill-client-info-wrapper .table.hundred-percent .left-cell-empty:after{
+    content: "  ";
+    display: block;
+    width: 60%;
+}
+
+
+.right-cell-client-address,
+div.table-responsive.bill-client-info-wrapper .table.hundred-percent .right-cell-client-address{
+    width:45% !important;
+    background:none;
+    border:none;
+}
+
+#Empfaenger{
+
+}
+h1, h2, h3, h4, h5 {
+    /*page-break-inside: avoid;*/
+}
+
+table, figure {
+    /*page-break-inside: avoid;*/
+}
+
+
+
+
+/*
+table.table-bordered.table>tr:last-child>td,
+table.table-bordered.table>tr:last-child>th,
+table.table-bordered.table>tr:first-child>td,
+table.table-bordered.table>tr:first-child>th,
+
+table.table-bordered.table>tbody>tr:last-child>td,
+table.table-bordered.table>tbody>tr:last-child>th,
+table.table-bordered.table>tbody>tr:first-child>td,
+table.table-bordered.table>tbody>tr:first-child>th,
+*/
+
+/*
+h1 {
+    page-break-before: always;
+}
+
+.print-block,
+#print-block,
+section#print-block{
+    page: vertical;
+    padding-bottom:35mm;
+}
+table {
+    page: horizontal;
+    width:100%;
+}
+#print-block-table{
+    height: 120mm;
+    width:100%;
+}
+#print-block-table,
+#print-block-table tr td{
+    height: 120mm;
+    width:100%;
+    padding-bottom:35mm;
+}
+
+
+
+
+@top-left-corner { content: "Django "; border: solid green; }
+@top-right-corner { content: "Jimdo"; border: solid green; }
+@bottom-right-corner { content: counter(page); border: solid green; }
+@bottom-left-corner { content: normal; border: solid green; }
+*/
+
+/*@page {
+    color: red !important;
+    size: 200mm 50mm !important;
+    width: 200mm !important;
+    height: 50mm !important;
+    margin: 100mm 16mm 27mm 50mm !important;
+    /*
+    margin: 27mm 16mm 27mm 16mm;
+    size: A4 landscape;*/
+/*
+}
+
+
+h1 {
+    page-break-before: always;
+}
+
+h1, h2, h3, h4, h5 {
+   page-break-after: avoid;
+}
+
+table, figure {
+    page-break-inside: avoid;
+}
+*/
+/*
+@page {
+size: A4 portrait;
+margin: 100mm 16mm 27mm 50mm;
+size: 150mm 50mm;
+margin: 27mm 16mm 27mm 16mm;
+size: A4 landscape;
+}
+
+@page vertical{
+    size: A4 portrait;
+    margin-top: 60mm;
+}
+@page horizontal {
+    size: A4 landscape;
+}
+body{
+}
+*/

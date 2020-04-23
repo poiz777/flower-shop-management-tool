@@ -1,0 +1,99 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}
+    {% include "utilities/page-title.html.twig" with { 'pageTitle': pageTitle } %}
+{% endblock %}
+
+{% block logo_img %}
+    {% include 'partials/shared/logo-box-@header.html.twig' %}
+{% endblock %}
+
+{% block top_header_right %}
+    {% include 'partials/shared/logout-box-@header.html.twig' %}
+{% endblock %}
+
+{% block top_css_block %}
+    <link rel="stylesheet" href="{{ asset('css/melanie.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/melanie-calendar-2.css') }}">
+    <style rel="stylesheet" media="print">
+        .label_div{
+            display:none;
+        }
+    </style>
+    <style rel="stylesheet" media="all">
+        .pz-micro-sized-width {
+            display: inline-block;
+            width: 25px;
+        }
+        .pz-client-v-card-wrapper {
+            background: #c7c7c7;
+            padding: 30px;
+        }
+        aside.pz-client-info-strip.pz-client-company-block {
+            font-size: 1.25em;
+            font-weight: 700;
+        }
+
+        .pz-client-v-card-wrapper aside.pz-client-info-strip.pz-client-name-block {
+            font-size: 2.4em;
+        }
+    </style>
+{% endblock %}
+
+
+{% block full_width_content %}
+    <section id="pz-main-wrapper" class="pz-main-wrapper no-lr-pad containR">
+        {% include'partials/shared/scroll-to-top.html.twig' %}
+        <section>
+            <section >
+                <div class="pz-time-tracker-wrapper col-md-12 no-lr-pad">
+                    <div class="col-md-12 no-lr-pad pz-form-wrapper" id="pz-form-wrapper">
+                        <section class="pz-form-centered">
+                            <div style="clear: both;"></div>
+                            
+                            <div class="col-md-12 no-lr-pad pz-wrapper-main" id="pz-wrapper-main">
+                                {% include '/admin/partials/navigation.html.twig' with {'navPayload': navPayload}  %}
+                                <header class="pz-page-title-header no-print">
+                                    <h1 class="pz-page-title">{{ pageTitle | html }}</h1>
+                                </header>
+    
+                                {% include'partials/flash-message.render.html.twig' %}
+                                
+                                <div class="pz-wrapper">
+                                    {% if clientData %}
+                                        {% include 'admin/partials/clients/client-full-info.html.twig' with {
+                                            'clientData': clientData
+                                        }  %}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </section>
+{% endblock %}
+
+
+{% block footer %}
+    {% include '/admin/partials/footer.html.twig' %}
+    
+    <!-- PRINT FOOTER: BEGIN -->
+    {% block mjr_footer %}
+        <section id="print-footer-null" class="no-print"></section>
+    {% endblock %}
+    <!-- PRINT FOOTER: END -->
+{% endblock %}
+
+
+{% block footer_scripts %}
+    <script type="text/javascript" src="{{ asset('js/jquery-3.1.0.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery.easing.1.3.js') }}"></script>
+    
+    <script type="text/javascript" src="{{ asset('js/jquery.poiz_tooltip.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/pz_melli.js') }}"></script>
+    
+    <script>
+    </script>
+{% endblock %}

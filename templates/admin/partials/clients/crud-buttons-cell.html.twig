@@ -1,0 +1,18 @@
+{% set monthTSlots      = get1MonthDiffTimeSlots() %}
+{% set clientStatsURI   = path('rte_admin_individual_statistics', {'cid': client.kundenid, 'start':monthTSlots.start, 'end':monthTSlots.stop })  %}
+<td class="pz-crud-buttons no-print">
+	<a class="pz-crud-icon pz-client-stats" href="{{ clientStatsURI }}">
+		<span class="fa fa-pie-chart" data-tip="Kundenstatistik<br /> <strong>{{ getTicketTargetClient(client, 0, 1) }} <br />Kunden Nr. {{ client.kundenid }}</strong><br /><strong style='color:darkblue;'>abrufen.</strong>"></span>
+		{#<span class="fa fa-pencil no-print" data-tip="{{ client.Firma }} <br/><strong>[ID: {{ client.kundenid }}]</strong> bearbeiten."></span> #}
+	</a>
+	
+	
+	<a class="pz-crud-icon pz-edit" href="{{ path('rte_admin_edit_client', {"id": client.kundenid}) }}">
+		<span class="fa fa-pencil no-print" data-tip="{{ getTicketTargetClient(client, 0, 1) }} <br/><strong>[ID: {{ client.kundenid }}]</strong><br/><strong style='color:darkgreen;'>bearbeiten.</strong>"></span>
+	</a>
+	<a class="pz-crud-icon pz-delete" href="{{ path('rte_admin_delete_client', {"id": client.kundenid}) }}"
+	   data-warn-b4-delete="1"
+	   data-delete-question="Möchtest Du der Kunde mit ID:  {{ client.kundenid }} wirklich <strong style='color:red'>entfernen?</strong>">
+		<span class="fa fa-trash no-print" data-tip="{{ getTicketTargetClient(client, 0, 1)}} <br/><strong>[ID: {{ client.kundenid }}]</strong><br /><strong style='color:red'>löschen.</strong>"></span>
+	</a>
+</td>

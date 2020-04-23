@@ -1,0 +1,11 @@
+
+{#
+'currentPage': currentPage,
+'ipp': ipp,
+'clientCount': clientCount,
+#}
+{% set navPillsCount = 10 %}
+{% set totalPages4IPP = clientCount/ipp %}
+<nav>
+	{{ buildPagination(ipp, clientCount, currentPage, 10, '') }}
+</nav>

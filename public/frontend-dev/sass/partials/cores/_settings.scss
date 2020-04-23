@@ -1,0 +1,35 @@
+$screen-width-medium:         1150px;
+$screen-width-small:          480px;
+$screen-width-default:        1150px;
+$half_screen_width:           480px;
+
+$font-family-default:         "Helvetica Neue",Helvetica,Arial,sans-serif;  //"Open Sans Condensed", sans-serif;
+$font-family-alternative:     "trebuchet ms", verdana, tahoma, sans-serif;
+
+$font-size-default:           15px;
+$font-size-navigation:        22px;
+$font-size-sub-link:          18px;
+$dark-milk-border-color:      #dac4af;
+
+$mel-icon-link-col				: #3c3c3c;;
+$mel-form-border-col			: rgba(158, 158, 158, 0.44);
+$mel-form-bg-col 				: rgba(253, 253, 253, 0.44);
+$mel-darker-tone				: #2c2c2c;
+$mel-border-top-color			: #9e9e9e;
+$mel-border-top-color-light		: #d1d1d1;
+$mel-border-top-color-active	: #8e8e8e;
+$mel-link-bg-col				: rgba(148, 148, 148, 0.18);
+$mel-active-link-bg-col			: #d4d4d4;	// #b9b8b8;
+$mel-active-link-col			: #7b7b7b;
+$mel-active-link-col-light		: rgba(190, 190, 190, 0.52);
+$mel-link-col					: #000000;
+$form-field-border-col			: rgba(142, 142, 142, 0.55);
+
+// TICKET RELATED
+$mjr-status-opened-color		: #FF9900;
+$mjr-status-closed-color		: #33FF33;
+$mjr-status-ready-color			: #FFFF33;
+
+$mjr-status-opened-color-2		: #0000CF;
+$mjr-status-closed-color-2		: #EF0000;
+$mjr-status-ready-color-2		: #0FB000;

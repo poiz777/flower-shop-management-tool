@@ -1,0 +1,16 @@
+{% block logo_img %}
+	<img style="display:inline-block;width:300px;height:auto;margin-top:10px;"
+	     src="{{ asset('images/logos/Melanie_JeanRichard_Logo_2020__0.png') }}"
+	     alt="Melanie JeanRichard Logo"
+	     class="poiz-logo"
+	     id="poiz-logo" />
+{% endblock %}
+
+{% block top_header_right %}
+	<div class="pz-user-status" id="pz-user-status">
+		<span class="fa fa-user"></span> Wilkommen, <strong>{{ app.user.friendlyName|ucFirst }}!</strong> &nbsp;&nbsp;|&nbsp;&nbsp;
+		<a href="{{ path('app_logout') }}" class="pz-logout-link">
+			<span class="fa fa-sign-out"></span> Logout
+		</a>
+	</div>
+{% endblock %}

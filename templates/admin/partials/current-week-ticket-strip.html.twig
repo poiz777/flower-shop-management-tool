@@ -1,0 +1,30 @@
+{% for ticketData in tickets4TheWeek %}
+	{% set tCount       = null %}
+	{% set numTickets   = null %}
+	{% if ticketData.data.0 is defined and ticketData.data.0 is not empty %}
+		{# {% set tCount       = ticketData.data.0.ticketPostsCount %}
+		{% set tCount       = tCount        > 2 ? "#{tCount} Ticketposten"  :  "#{tCount} Ticketpost" %} #}
+		{% set numTickets   = ticketData.data.0.ticketsCount %}
+		{% set numTickets   = numTickets    > 1 ? "#{numTickets} Tickets"   :  "#{numTickets} Ticket" %}
+	{% endif %}
+	
+	<div class="pz-current-ticket-strip">
+		<div class="pz-current-ticket-heading">
+			<span class="pz-time pz-weekday">{{ ticketData.full }}</span>, <span class="pz-time pz-week-date">{{ ticketData.date }}</span>
+			<span class="pull-right fa fa-chevron-up pz-cal-week-content-toggle" data-tip="Ansicht umschalten"></span>
+			{# <span class="pull-right badge pz-badge">{{ tCount }}</span> #}
+			{# <span class="pull-right badge pz-badge">{{ size(ticketData.data, 'Ticket', 'Tickets') }}</span> #}
+			{% if numTickets %}
+				<span class="pull-right badge pz-badge">{{ numTickets }}</span>
+			{% endif %}
+			{# % if tCount %}
+				<span class="pull-right badge pz-badge">{{ tCount }}</span>
+			{% endif % #}
+		</div>
+		<div class="pz-cal-week-content">
+			{% for tmGap in ["07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19"] %}
+				{% include '/admin/partials/non-empty-current-ticket-strip.html.twig' with {"tmGap": tmGap, 'tickets4TheDay': ticketData.data, activeDate: ticketData.date } %}
+			{% endfor %}
+		</div>
+	</div>
+{% endfor %}

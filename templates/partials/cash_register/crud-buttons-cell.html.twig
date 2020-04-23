@@ -1,0 +1,26 @@
+{# 'billType': 'archive', 'edit', 'track', #}
+{% set detailEditURL = path('rte_admin_track_open_bill', {"id": bill.Rechnung_id, "total": bill.total}) %}
+<td class="pz-crud-buttons no-print">
+	{% if billType is defined and billType == 'archive' %}
+		<a class="pz-crud-icon pz-edit" href="{{ path('rte_admin_closed_bill_details', {"id": bill.Rechnung_id}) }}">
+			<span class="fa fa-list"
+			      data-tip="Details <br /><strong>RechnungsNr. {{  bill.Rechnung_nummer }}</strong><br/><strong style='color:darkgreen'>anzeigen</span>"></span>
+		</a>
+	{# {% elseif billType is defined and billType != 'archive' %} , "billType": 2  #}
+	{% else %}
+		{# DID YOU TEST THIS? DOES IT WORK??? COS YOU MAY NOT NEED ALL THE EXTRA ROUTE PARAMETERS AFTER ALL... #}
+		{# <a class="pz-crud-icon pz-edit" href="{{ path('rte_admin_track_open_bill', {"id": bill.Rechnung_id, "bhj_id": bill.Rechnung_BHNr_bez, 'intent': 'edit_client_bill', "date": bill.Rechnung_Datum_bez | date('Y-m-d'), "total": bill.total }) }}">  #}
+		<a class="pz-crud-icon pz-edit" href="{{ detailEditURL }}">
+			<span class="fa fa-pencil"
+			      data-tip="Rechnung<br />ID: {{  bill.Rechnung_id }}<br/><strong style='color:darkgreen'>bearbeiten</span>"></span>
+		</a>
+	{% endif %}
+	{# DID YOU TEST THIS? DOES IT WORK??? COS YOU MAY NOT NEED ALL THE EXTRA ROUTE PARAMETERS AFTER ALL... #}
+	<a class="pz-crud-icon pz-delete" href="{{ path('rte_admin_delete_bill', {"id": bill.Rechnung_id, "bhj_id": bill.Rechnung_BHNr_bez, "date": bill.Rechnung_Datum_bez | date('Y-m-d') }) }}">
+		<span class="fa fa-trash"
+		      data-tip="Rechnung<br />ID: {{  bill.Rechnung_id }}<br/><strong style='color:red'>entfernen</span>"
+		      data-warn-b4-delete="1"
+		      data-delete-question="Möchtest Du wirklich dieser Rechnung<br />ID: {{ bill.Rechnung_id }} <strong style='color:red'>löschen?</strong>"
+		></span>
+	</a>
+</td>

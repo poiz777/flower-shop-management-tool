@@ -1,0 +1,13 @@
+{% set ticketOpener = null  %}
+{% if ticketEntry.ticket_opener is defined and ticketEntry.ticket_opener is not null %}
+	{% set ticketOpener =  ticketEntry.ticket_opener  %}
+{% elseif ticket.ticket_opener is defined and ticket.ticket_opener is not null %}
+	{% set ticketOpener =  ticket.ticket_opener  %}
+{% endif %}
+
+ {% if ticketOpener is not null %}
+	 <div class="pz-ticket-opener">
+		 <span data-tip="geschrieben von:<br/>{{ getPersonByID(ticketOpener) }}"
+		       class="pz-owner-name pz-ticket-status-{{ ticket.ticket_status }} pz-ticket-priority-{{ ticket.ticket_prio }}"><span class="fa fa-angle-right"></span> &nbsp;{{ getPersonByID( ticketOpener ) }}</span>
+	 </div>
+ {% endif %}

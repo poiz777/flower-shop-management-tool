@@ -1,0 +1,153 @@
+<!Doctype HTML>
+<html >
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="">
+
+    {% block css %}
+        <link href="{{ asset('css/bootstrap.min.css') }}" media="all" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('css/font-awesome.min.css') }}" media="all" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('css/supplemental-1.css') }}" media="all" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('css/supplemental-2.css') }}" media="all" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('css/poiz.css') }}" media="all" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('images/icons/favicon.ico') }}"  rel="shortcut icon" />
+        
+        <!-- SLIDING MODAL PLUGIN INJECTION -->
+        <link href="{{ asset('css/sliding-modal.css') }}" media="all" rel="stylesheet" type="text/css" />
+        <script src="{{ asset('js/PzStorageManager.js') }}"></script>
+        <script src="{{ asset('js/SlidingModal.js') }}"></script>
+        <script src="{{ asset('js/Printer.js') }}"></script>
+        
+        <!-- DROP-DOWN WIDGET INJECTION -->
+        <link href="{{ asset('css/drop-down-enhanced.css') }}" media="all" rel="stylesheet" type="text/css" />
+        <script src="{{ asset('js/widgets/drop-down-super-enhanced.js') }}" ></script>
+    {% endblock %}
+
+    {% block top_css_block %}
+    {% endblock %}
+
+
+    <!-- Scripts -->
+
+    <style type="text/css">
+        {% block inline_css %}
+        {% endblock %}
+    </style>
+
+</head>
+
+<body id="pz-body-main" class="pz-body-main">
+<!-- PRINT HEADER: BEGIN -->
+<section id="print-header" class="print-only">
+    <header style="text-align:center; margin:0 auto;width:100%;margin-top:10mm;">
+        <img alt="MJR Logo - Text" src="/images/logos/Logo_MJR_Design.png" style="margin:0 auto;text-align:center;width:18mm;height:auto;display:block;" />
+    </header>
+</section>
+<!-- PRINT HEADER: END -->
+
+<div class="header_padder no-print">&nbsp;</div>
+<div id="cs_cart_module_wrapper" class="no-print">
+    <div id="cs_cart_module" class="col-md-12 no_padding cs_cart_module no-print"></div>
+</div>
+
+<div id="static_bar_top" class="navbar navbar-inverse navbar-fixed-top no-print" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <div class="pz-header-central col-md-12">
+                <div class="pz-logo-slot col-md-6 no-lr-pad">
+                    {% block logo_img %}
+                    {% endblock %}
+                </div>
+                <div class="pz-top-right-slot col-md-6 no-r-pad">
+                    {% block top_header_right %}
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ADMIN BLOCK GOES HERE -->
+<div class="containR">
+    <div class="pre-content">
+        {% block pre_content %}
+        {% endblock %}
+    </div>
+</div>
+
+<div class="container">
+    
+    <div class="col-md-12">
+        {% block top_row %}
+        {% endblock %}
+    </div>
+    
+    
+    
+    <div class="col-md-12">
+        <table class="table print-block-table print-facilitator" id="print-facilitator">
+            <thead>
+                <tr class="block-display-row">
+                    <td class="block-display-cell">
+                        <div class="header-space print-only">&nbsp;</div>
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="block-display-row">
+                    <td id="pz-main-content-wrapper" class="block-display-cell">
+                        {% block full_width_content %}
+                        {% endblock %}
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr class="block-display-row">
+                    <td class="block-display-cell">
+                        <div class="footer-space print-only">&nbsp;</div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    
+    <div class="col-md-12">
+        <div class="col-md-9">
+            {% block content %}
+            {% endblock %}
+        </div>
+        <div class="col-md-3">
+            {% block menu_left %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+
+<footer>
+    {% block footer %}
+    {% endblock %}
+</footer>
+
+{% block footer_scripts %}
+{% endblock %}
+
+{% block footer_css %}
+{% endblock %}
+
+<!-- PRINT FOOTER: BEGIN -->
+{% block mjr_footer %}
+<section id="print-footer" class="print-only">
+    <footer style="text-align:center;margin:0 auto;width:100%;">
+        <img alt="MJR Logo - Text" src="/images/logos/Melanie_JeanRichard_Logo_OK_01.png" style="margin:0 auto;text-align:center;width:45mm;height:auto;display:block;" />
+        <div style="font-size:8pt;display:block;padding:15px 0px 8px 0px;">JeanRichard-dit-Bressel GmbH</div>
+        <div style="font-size:8.5pt;margin:0;padding:0;">Münstergasse 72&nbsp;&nbsp;&nbsp;3011 Bern&nbsp;&nbsp;&nbsp;031 311 46 79&nbsp;&nbsp;&nbsp;blumen@melaniejeanrichard.ch&nbsp;&nbsp;&nbsp;<a href="http://melaniejeanrichard.ch">melaniejeanrichard.ch</a></div>
+        <div style="font-size:8.5pt;margin:0;padding:0;">IBAN:&nbsp;&nbsp;CH46 0900 0000 6055 9437 4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MwSt. CHE-105.642.287</div>
+    </footer>
+</section>
+{% endblock %}
+<!-- PRINT FOOTER: END -->
+</body>
+</html>

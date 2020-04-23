@@ -1,0 +1,48 @@
+{#
+{{ pzDump('PATHINFO') }}
+{{ pzDump(app.request.pathInfo) }}
+{{ pzDump('REQUEST URI') }}
+{{ pzDump(app.request.requestUri) }}
+{{ pzDump(path('rte_admin_calendar')) }}
+#}
+<div class="pz-4-cols-grid pz-link-parent no-print">
+	{% if navPayload %}
+		{% set activeChildren = [] %}
+		{% for navData in navPayload %}
+			{% set href = navData.url ? path(navData.url) : '' %}
+			{% set activeLink = '' %}
+			{% if inRoutePath(href, app.request.requestUri)   %}
+				{% set activeLink = 'active pz-active' %}
+				{% set activeChildren = navData.children %}
+			{% endif %}
+			{% if userCanInteractWithPage(app.user, navData.roles) %}
+				<div class="pz-link-action-box {{ activeLink }}">
+					<a href="{{ href }}" class="pz-link {{ activeLink }}">
+						<span class="pz-link-action-icon {{ navData.icon }}"></span>
+						<span class="pz-link-action-title">{{ navData.title }}</span>
+					</a>
+				</div>
+			{% endif %}
+		{% endfor %}
+	{% endif %}
+</div>
+
+{% if activeChildren %}
+	<div class="pz-link-children no-print">
+		{% for activeChild in activeChildren %}
+			{% set href = activeChild.url ? path(activeChild.url) : '' %}
+			{% set activeLink = '' %}
+			{% if inRoutePath(href, app.request.requestUri)   %}
+				{% set activeLink = 'active pz-active' %}
+			{% endif %}
+			{% if userCanInteractWithPage(app.user, activeChild.roles) %}
+				<div class="pz-link-action-box pz-link-child {{ activeLink }}">
+					<a href="{{ href }}" class="pz-link {{ activeLink }}">
+						<span class="pz-link-action-icon {{ activeChild.icon }}"></span>
+						<span class="pz-link-action-title">{{ activeChild.title }}</span>
+					</a>
+				</div>
+			{% endif %}
+		{% endfor %}
+	</div>
+{% endif %}

@@ -1,0 +1,26 @@
+
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/
+/vendor/
+/__info-tips/*
+/___scripts/*
+/__SVR_DATA/*
+/public/images/qr-codes/*
+/public/css-del/*
+/public/frontend-dev/_junk_del/*
+/public/frontend-dev/node_modules/*
+/public/frontend-dev/_package copy.json
+/public/frontend-dev/_package-lock.json
+/public/images/logos/PSD_FILES/*
+/public/images/logos/AI_EPS_FILES/*
+/public/images/logos/333logo_fffhg.jpg
+/__PDF_RESOURCERS/*
+.idea/*
+.env
+
+###< symfony/framework-bundle ###

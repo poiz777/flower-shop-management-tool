@@ -1,0 +1,84 @@
+{% set lastTicketID = null %}
+{% set ticketsCount = 0 %}
+{% for ticketA in tickets4TheDay %}
+	{% if (ticketA.ticketDueHour) == tmGap %}
+		{% set ticketsCount = ticketsCount+1 %}
+	{% endif %}
+{% endfor %}
+
+{% if ticketsCount %}
+	<div class="pz-current-ticket-strip">
+		<div class="pz-current-ticket-heading">
+			{% set activeDate = activeDate is defined ? activeDate : currentCalendarDate() %}
+			<!-- CONSIDER USING AJAX FOR ADDING EVENTS TO THE CALENDAR -->
+			<span class="pz-time">{{ tmGap }}:00</span>
+			<a href="{{ getAddCalendarEventURIForTime(tmGap) }}">
+				<span class="fa fa-plus-square pull-right pz-add-ticket-2-time"
+				      data-time="{{ tmGap }}:00"
+				      data-date="{{ activeDate }}"
+				      {# {{ dataTicketID }} #}
+				      data-tip="Neue Ticket zur <br/>{{ activeDate }}, {{ tmGap }}:00 Uhr<br/>hinzufügen"
+				></span>
+			</a>
+		</div>
+		
+		{% for ticket in tickets4TheDay %}
+			{% if ticket.ticket_id != lastTicketID %}
+				{% set lastTicketID = ticket.ticket_id %}
+				{% if ticket.ticketeintrag_eintrag is not defined %} {# CHANGED not empty TO not defined TEMPORARILY #}
+					{% set evenOdd =  loop.index % 2 == 0 ? 'even' : 'odd' %}
+					{% if (ticket.ticketDueHour) == tmGap %}
+						{# TICKET TITLE/HEADING: START #}
+							{% include '/admin/partials/ticket-heading-title.html.twig' with {'ticket' : ticket} %}
+						{# TICKET TITLE/HEADING: STOP #}
+						
+						{# TICKET ENTRIES: START #}
+						{% if ticket.children is defined and ticket.children %}
+							<article class="pz-hidden pz-ticket-content">
+								{% for ticketEntry in ticket.children %}
+									{# INDIVIDUAL TICKET POSTS: START #}
+									<aside class="pz-ticket-entry-strip">
+										<div class="pz-ticket-text">
+											<aside class="pz-ticket-entry">
+												<span class="badge">{{ ticketEntry.ticketeintrag_datum | date('d.m.Y') }}</span>  {# CHANGED ticketeintragDatum TO ticketeintrag_datum #}
+												<span class="badge">{{ getPersonByID(ticket.ticket_MA_verantwortung) }}</span>
+												{{ ticketEntry.ticketeintrag_eintrag | html | raw }} {# CHANGED ticketeintragEintrag TO ticketeintrag_eintrag #}
+												<a class="pz-trash-dis-post fa fa-trash pull-right"
+												   data-alt-href="{{ path("rte_admin_delete_ticket_entry", {'id': ticketEntry.ticketeintrag_id, 'tid': ticketEntry.ticketeintrag_ticket_id }) }}"
+												   href="{{ path("rte_ajax_delete_ticket_post", {'id': ticketEntry.ticketeintrag_id}) }}"
+												   data-warn-b4-delete="1"
+												   data-delete-question="Möchtest Du wirklich das Ticketpost Nr.  {{ ticketEntry.ticketeintrag_id }} <strong style='color:red'>entfernen?</strong>"
+												   data-tip="Ticketpost Nr. {{ ticketEntry.ticketeintrag_id }}<br/><strong style='color:red;'>entfernen</strong>"></a>
+												<a style="cursor:pointer;" class="pz-edit-dis-post fa fa-pencil pull-right"
+												   data-endpoint="{{ path("rte_ajax_edit_ticket_post", {'id' : ticketEntry.ticketeintrag_id })}}"
+												   data-tip="Ticketpost Nr. {{ ticketEntry.ticketeintrag_id }}<br/><strong style='color:darkblue;'>bearbeiten</strong>"></a>
+												<a class="pz-add-2-dis-post fa fa-plus-square pull-right"
+												   href="{{ path('rte_admin_ticket_detail', {'id': ticket.ticket_id} ) }}"
+												   data-tip="Neue Post zur<br/>Ticket Nr. {{ ticket.ticket_id }}<br/><strong style='color:darkgreen;'>hinzufügen</strong>"></a>
+											</aside>
+											
+											{# TICKET CREATOR: START #}
+												{% include 'partials/ticket/ticket-creator.html.twig' with {'ticket': ticket, 'ticketEntry': ticketEntry} %}
+											{# TICKET CREATOR: STOP #}
+											
+										</div>
+									</aside>
+									{# INDIVIDUAL TICKET POSTS: STOP #}
+								{% endfor %}
+								
+								{# ASSOCIATED CLIENT-INFO FOR THIS TICKET: START #}
+								<aside class="pz-client-contact">
+									{% if ticket.client is defined and ticket.client is not empty %}
+										{% include '/admin/partials/client-info-for-ticket.html.twig' with {'ticket': ticket } %}
+									{% endif %}
+								</aside>
+								{# ASSOCIATED CLIENT-INFO FOR THIS TICKET: STOP #}
+							</article>
+						{% endif %}
+						{# TICKET ENTRIES: STOP #}
+					{% endif %}
+				{% endif %}
+			{% endif %}
+		{% endfor %}
+	</div>
+{% endif %}

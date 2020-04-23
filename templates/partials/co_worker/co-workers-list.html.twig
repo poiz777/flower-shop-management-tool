@@ -1,0 +1,54 @@
+<div class="table-responsive">
+	<table class="table table-bordered table-striped table-hover">
+		<thead class="pz-clients-thead first pz-tbl-heading">
+		<tr class="pz-clients-thead-row first pz-tbl-heading-row">
+			<th>ID</th>
+			<th>Vollname</th>
+			<th>Adresse.</th>
+			<th>Telefon</th>
+			<th>Gerbürtsdatum</th>
+			<th class="no-print" style="width:12%;">Actions</th>
+		</tr>
+		</thead>
+		<tbody class="pz-clients-tbl-body pz-tbl-tbody">
+		{% for coWorker in coWorkers %}
+			<tr class="pz-clients-tbody-row pz-tbl-tbody-row">
+				<td>{{ coWorker.kundenid | trim }}</td>
+				<td>{{ coWorker.vorname | trim }} {{ coWorker.name | trim }}</td>
+				<td>
+					{{ coWorker.Strasse | trim }} {{ coWorker.Strassennummer | trim }}<br />
+					{{ coWorker.PLZ | trim }} {{ coWorker.Ort | trim }}
+				</td>
+				<td>
+					{% if coWorker.Telefon | trim %} T. {{ coWorker.Telefon | trim }} <br /> {% endif %}
+					{% if coWorker.Handy | trim %}H. {{ coWorker.Handy | trim }}  {% endif %}
+				</td>
+				<td>{{ coWorker.gebDatum | date("d.m.Y") }}</td>
+				<td class="no-print">
+					{% set coWorkerName = "#{coWorker.vorname} #{coWorker.name}" %}
+					<div class="pz-crud-buttons">
+						<a class="pz-crud-icon pz-edit" href="{{ path('rte_admin_manage_coworkers', {"id": coWorker.kundenid, "task": "bearbeiten" }) }}">
+							<span class="fa fa-pencil" data-tip="<strong>{{ coWorkerName }}</strong><br />[ID: {{ coWorker.kundenid }}]<br /><strong style='color:darkgreen;'>bearbeiten.</strong>"></span>
+						</a>
+						<a class="pz-crud-icon pz-delete" href="{{ path('rte_admin_manage_coworkers', {"id": coWorker.kundenid, "task": "loeschen"}) }}"
+						   data-warn-b4-delete="1"
+						   data-delete-question="Möchtest Du wirklich der Mitarbeiter:<br/><strong>{{ coWorkerName }} [ID: {{ coWorker.kundenid }}]</strong> <strong style='color:red'>entfernen?</strong>">
+							<span class="fa fa-trash" data-tip="<strong>{{ coWorkerName }}</strong><br />[ID: {{ coWorker.kundenid }}]<br /><strong style='color:red;'>löschen.</strong>"></span>
+						</a>
+					</div>
+				</td>
+			</tr>
+		{% endfor %}
+		{#
+		<tr class="pz-clients-tbody-row pz-tbl-tbody-row">
+			<td><strong>Total</strong></td>
+			<td><strong>{{ mgTimeTotal | number_format(2, '.', "'") }}</strong></td>
+			<td><strong>{{ hgTimeTotal | number_format(2, '.', "'") }}</strong></td>
+			<td><strong>{{ extTimeTotal | number_format(2, '.', "'") }}</strong></td>
+			<td><strong>{{ allTimeTotal | number_format(2, '.', "'") }}</strong></td>
+			<td>&nbsp;</td>
+		</tr>
+		#}
+		</tbody>
+	</table>
+</div>

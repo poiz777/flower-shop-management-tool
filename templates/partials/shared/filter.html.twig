@@ -1,0 +1,52 @@
+{% block top_css_block%}
+    <style>
+        .pz-filter-wrapper{
+            position:relative;
+            width: 100%;
+        }
+        input#pz-filter-field-main{
+            width: 100%;
+            height: 40px;
+            border: NONE;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+            font-size: 1.25em;
+            color: #48006b;
+            border-bottom: solid 1px #b7b7b7;
+            border-top: solid 1px #b7b7b7;
+            border-radius: 0;
+            outline: none;
+        }
+        .pz-filter-form-group{
+            margin-bottom:5px;
+            /*
+            position: fixed;
+            width: 100%;
+            margin-bottom: 40px;
+            */
+        }
+        .pz-filter-icon {
+            position: absolute;
+            color: white;
+            top: 1px;
+            right: 0;
+            padding: 12px 13px 12px 13px;
+            background: #757575;
+            cursor: pointer;
+            max-height: 40px;
+        }
+    </style>
+{% endblock %}
+<div class="pz-filter-wrapper">
+    <div class="form-group pz-filter-form-group">
+        <input type="text"
+               id="pz-filter-field-main"
+               data-filter-element="{{ filterElement }}"
+               data-filter-class="{{ filterCssClass }}"
+               data-affected-parent-class="{{ affectedParentClass }}"
+               data-affected-parent-tag="{{ affectedParentTag }}"
+               class="form-control pz-form-widget"
+               placeholder="{{ placeholder }}">
+        <span class="fa fa-filter pz-filter-icon"></span>
+    </div>
+</div>

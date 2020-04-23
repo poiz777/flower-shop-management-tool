@@ -1,0 +1,16 @@
+{% set mediaCSS     = "" %}
+{% set mediaClass   = "" %}
+{% if targetMedia is defined %}
+	{% if targetMedia == "print" %}
+		{% set mediaCSS     = "width:30mm;height:auto;margin:10px 0;" %}
+		{% set mediaClass   = "print-only printable" %}
+	{% else %}
+		{% set mediaCSS     = "width:30mm;height:auto;float:right;text-align:right;" %}
+		{% set mediaClass   = "no-print" %}
+	{% endif %}
+{% endif %}
+{% if qrCodeURL is defined and qrCodeURL %}
+	<div class="{{ mediaClass }}">
+		<img style="{{ mediaCSS }}" src="{{ qrCodeURL }}" />
+	</div>
+{% endif %}

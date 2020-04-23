@@ -1,0 +1,69 @@
+{% extends 'master.html.twig' %}
+
+{% block title %}
+    {% include "utilities/page-title.html.twig" with { 'pageTitle': pageTitle } %}
+{% endblock %}
+
+{% block logo_img %}
+    {% include 'partials/shared/logo-box-@header.html.twig' %}
+{% endblock %}
+
+{% block top_header_right %}
+    {% include 'partials/shared/logout-box-@header.html.twig' %}
+{% endblock %}
+
+{% block top_css_block %}
+    <link rel="stylesheet" href="{{ asset('css/melanie.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/melanie-calendar-2.css') }}">
+{% endblock %}
+
+
+{% block full_width_content %}
+    <section id="pz-main-wrapper" class="pz-main-wrapper no-lr-pad containR">
+        {% include'partials/shared/scroll-to-top.html.twig' %}
+        <section>
+            {% include'partials/flash-message.render.html.twig' %}
+            <section >
+                <div class="pz-time-tracker-wrapper col-md-12 no-lr-pad">
+                    <div class="col-md-12 no-lr-pad pz-form-wrapper" id="pz-form-wrapper">
+                        <section class="pz-form-centered">
+                            <div style="clear: both;"></div>
+                            
+                            <div class="col-md-12 no-lr-pad pz-wrapper-main" id="pz-wrapper-main">
+                                {% include('/admin/partials/navigation.html.twig') %}
+    
+                                {% include '/admin/partials/calendar-form.html.twig' with  {"branchOptions": branchOptions, "user": user} %}
+    
+                                <div class="col-md-12 no-lr-pad calendar-form-wrapper">
+                                    <div class="col-md-3 no-lr-pad list-unstyled">
+                                    </div>
+                                    <div class="col-md-9 no-r-pad">
+                                    </div>
+                                </div>
+    
+                                <div class="pz-grid-1-3-3-1">
+                                    {{ calendarAll | raw }}
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </section>
+        </section>
+    </section>
+{% endblock %}
+
+{% block footer %}
+    {% include '/admin/partials/footer.html.twig' %}
+{% endblock %}
+
+{% block footer_scripts %}
+    <script type="text/javascript" src="{{ asset('js/jquery-3.1.0.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery.easing.1.3.js') }}"></script>
+    
+    <script type="text/javascript" src="{{ asset('js/jquery.poiz_tooltip.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/pz_melli.js') }}"></script>
+    
+    <script>
+    </script>
+{% endblock %}

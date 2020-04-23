@@ -1,0 +1,49 @@
+{% block top_css_block %}
+	<style>
+		.pz-export-link{
+			display: inline-block;
+			min-width: 75px;
+			text-align: center;
+			box-sizing: border-box;
+			padding: 6px 10px;
+			margin-right: 5px;
+			background: lightgrey;
+			border: solid 1px #c1c1c1;
+			margin-bottom: 15px;
+		}
+	</style>
+{% endblock %}
+
+{% set pdfURL   = pdfLink is defined and pdfLink ? pdfLink : "?export=pdf" %}
+{% set csvURL   = csvLink is defined and csvLink ? csvLink : "?export=csv" %}
+{% set jsonURL  = jsonLink is defined and jsonLink ? jsonLink : "?export=json" %}
+
+{% set showPrev     = showPrev      is defined  ? showPrev      : true  %}
+{% set showPrint    = showPrint     is defined  ? showPrint     : true  %}
+{% set showJSPrint  = showJSPrint   is defined  ? showJSPrint   : false %}
+{% set showPDF      = showPDF       is defined  ? showPDF       : false %}
+{% set showCSV      = showCSV       is defined  ? showCSV       : false %}
+{% set showJSON     = showJSON      is defined  ? showJSON      : false %}
+
+{% if showPrev %}
+	<a href="javascript:window.history.back();" class="pz-export-link pz-back-button no-print"><span class="fa fa-chevron-left"></span> Zurück</a>
+{% endif %}
+
+{% if showPDF %}
+	<a href="{{ pdfURL }}" class="pz-export-link no-print"><span class="fa fa-file-pdf-o"></span> PDF</a>
+{% endif %}
+
+{% if showPrint %}
+	{# href="javascript:window.print();" #}
+	<a  class="pz-export-link pz-print-button no-print"><span class="fa fa-print"></span> Drucken</a>
+{% elseif showJSPrint %}
+	<a  class="pz-export-link pz-standard-print-button no-print" href="javascript:window.print();"><span class="fa fa-print"></span> Drucken</a>
+{% endif %}
+
+{% if showCSV %}
+	<a href="{{ csvURL }}" class="pz-export-link no-print"><span class="fa fa-download"></span> CSV</a>
+{% endif %}
+
+{% if showJSON %}
+	<a href="{{ jsonURL }}" class="pz-export-link no-print"><span class="fa fa-cloud-download"></span> JSON</a>
+{% endif %}

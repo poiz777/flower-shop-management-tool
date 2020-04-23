@@ -1,0 +1,27 @@
+{% if tickets %}
+	<div class="table-responsive">
+		<table class="table table-bordered table-striped table-condensed">
+			<tr class="pz-tbl-heading-row" style="background: black; color:white;">
+				<td><strong>Tickets dieses WDB-Eintrags</strong></td>
+				<td><strong>Kundin</strong></td>
+				<td><strong>Status</strong></td>
+				<td><strong>Datum</strong></td>
+			</tr>
+			<tbody>
+				{% for ticket in tickets %}
+					<tr>
+						<td>
+							<a href="{{ path("rte_admin_ticket_detail", {'id': ticket.ticket_id}) }}">
+								<span class="fa fa-link"></span>&nbsp;
+								{{ ticket.ticket_header }}
+							</a>
+						</td>
+						<td>{{ getTicketTargetClient(ticket.client)  }}</td>
+						<td><span class="fa fa-circle pz-ticket-status-{{ ticket.ticket_status }}"></span>&nbsp;&nbsp;{{ ticketStatusStringFromID(ticket.ticket_status) }}</td>
+						<td>{{ ticket.ticket_endtermin | date('d.m.Y')}}</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endif %}

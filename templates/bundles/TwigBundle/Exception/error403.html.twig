@@ -1,0 +1,70 @@
+{# templates/bundles/TwigBundle/Exception/error404.html.twig #}
+{% extends 'master.html.twig' %}
+
+{% set pageTitle    = "Error" %}
+{% set navPayload   = getNavigationPayload() %}
+
+{% block title %}
+	{% include "utilities/page-title.html.twig" with { 'pageTitle': pageTitle } %}
+{% endblock %}
+
+{% block logo_img %}
+	{% include 'partials/shared/logo-box-@header.html.twig' %}
+{% endblock %}
+
+{% block top_header_right %}
+	{% include 'partials/shared/logout-box-@header.html.twig' %}
+{% endblock %}
+
+{% block top_css_block %}
+	<link rel="stylesheet" href="{{ asset('css/melanie.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/melanie-calendar-2.css') }}">
+{% endblock %}
+
+
+{% block full_width_content %}
+	<section id="pz-main-wrapper" class="pz-main-wrapper no-lr-pad containR">
+		{% include'partials/shared/scroll-to-top.html.twig' %}
+		<section>
+			<section >
+				<div class="pz-time-tracker-wrapper col-md-12 no-lr-pad">
+					<div class="col-md-12 no-lr-pad pz-form-wrapper" id="pz-form-wrapper">
+						<section class="pz-form-centered">
+							<div style="clear: both;"></div>
+							
+							<div class="col-md-12 no-lr-pad pz-wrapper-main" id="pz-wrapper-main">
+								{% include '/admin/partials/navigation.html.twig' with {'navPayload': navPayload}  %}
+								<header class="pz-page-title-header">
+									<h1 class="pz-page-title">{{ pageTitle | html }}</h1>
+								</header>
+								
+								<div class="pz-wrapper">
+									{% include'partials/flash-message.render.html.twig' %}
+									<article class="pz-background-wrapper">
+										<img style="width: 100%;height:auto;margin-bottom: 15px;"
+										     src="{{ asset('images/errors/error@2.png') }}"
+										     alt="404 Error Pix"
+										     class="pz-error-pix"
+										     id="error-pix" />
+										<div class="jumbotron">
+											<p style="color:#0B0B0B;">
+												Bei der Verarbeitung Deiner Anfrage ist ein Fehler aufgetreten. Bitte versuche es später erneut.
+											</p>
+										</div>
+									</article>
+								</div>
+							</div>
+						</section>
+					</div>
+				</div>
+			</section>
+		</section>
+	</section>
+{% endblock %}
+
+{% block footer %}
+	{% include '/admin/partials/footer.html.twig' %}
+{% endblock %}
+
+{% block footer_scripts %}
+{% endblock %}

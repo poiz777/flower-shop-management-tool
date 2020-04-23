@@ -1,0 +1,118 @@
+<div class="table-responsive">
+	{# show the latter only if you are not in search mode... #}
+	
+	{% include 'partials/shared/filter-table.html.twig'  with {
+		"filterCssClass" : "",
+		"filterElement" : "td",
+		"affectedParentClass" : "pz-clients-tbody-row",
+		"affectedParentTag" : "tr",
+		"placeholder" : "Suchergebnisse weiterfiltern..."
+	} %}
+	<div style="margin-top:25px" class="no-print">
+		{% set pdfURL   = pdfLink is defined and pdfLink ? pdfLink : "?export=pdf" %}
+		{% set csvURL   = csvLink is defined and csvLink ? csvLink : "?export=csv" %}
+		{% set jsonURL  = jsonLink is defined and jsonLink ? jsonLink : "?export=json" %}
+		{% set showPDF  = showPDF is defined ? showPDF : true %}
+		{% set showCSV  = showCSV is defined ? showCSV : true %}
+		{% set showPrint  = showPrint is defined ? showPrint : false %}
+		{% set showJSON  = showJSON is defined ? showJSON : true %}
+		{% include 'partials/shared/export.html.twig' with {
+			"csvLink" : csvURL,
+			"pdfLink" : pdfURL,
+			"jsonLink" : jsonURL,
+			"showPDF" : showPDF,
+			"showPrint" : showPrint,
+			"showCSV" : showCSV,
+			"showJSON" : showJSON,
+		} %}
+	</div>
+	{% if showPagination %}
+		<div class="pz-clients-grid last pz-footer-grid no-print">
+			{{ buildIppDropDown(ipp, 10, 10, 100) }}
+			
+			{{ buildPaginationCount(ipp, clientCount) }}
+			{% include '/admin/partials/clients/pagination.html.twig' with {
+				'currentPage': currentPage,
+				'ipp': ipp,
+				'clientCount': clientCount,
+			} %}
+		</div>
+	{% endif %}
+	
+	<table class="table table-bordered table-striped table-hover">
+		<thead class="pz-clients-thead first pz-tbl-heading">
+			<tr class="pz-clients-thead-row first pz-tbl-heading-row">
+				<th>ID&nbsp;
+					<span class="fa fa-angle-up pz-sort-icon pz-sort-up no-print pz-active active" data-sort-by="kundenid" data-sort-direction="asc"></span>
+					<span class="fa fa-angle-down pz-sort-icon pz-sort-down no-print" data-sort-by="kundenid" data-sort-direction="desc"></span>
+				</th>
+				<th>Firma&nbsp;
+					<span class="fa fa-angle-up pz-sort-icon pz-sort-up no-print" data-sort-by="Firma" data-sort-direction="asc"></span>
+					<span class="fa fa-angle-down pz-sort-icon pz-sort-down no-print" data-sort-by="Firma" data-sort-direction="desc"></span>
+				</th>
+				<th>Name&nbsp;
+					<span class="fa fa-angle-up pz-sort-icon pz-sort-up no-print" data-sort-by="name" data-sort-direction="asc"></span>
+					<span class="fa fa-angle-down pz-sort-icon pz-sort-down no-print" data-sort-by="name" data-sort-direction="desc"></span>
+				</th>
+				<th>Vorname&nbsp;
+					<span class="fa fa-angle-up pz-sort-icon pz-sort-up no-print" data-sort-by="vorname" data-sort-direction="asc"></span>
+					<span class="fa fa-angle-down pz-sort-icon pz-sort-down no-print" data-sort-by="vorname" data-sort-direction="desc"></span>
+				</th>
+				{# <th class="no-print">Mut</th>
+				<th class="no-print">Stat</th> #}
+				<th class="no-print">Actions</th>
+			</tr>
+		</thead>
+		<tbody class="pz-clients-tbl-body pz-tbl-tbody">
+			{% for client in clients %}
+				<tr class="pz-clients-tbody-row pz-tbl-tbody-row">
+					{% set detailURL = path('rte_admin_search_client', {"id": client.kundenid})  %}
+					<td>
+						{% if addDetailLink is defined and addDetailLink %}
+							<a href="{{ detailURL }}">{{ client.kundenid }}</a>
+						{% else %}
+							<span>{{ client.kundenid }}</span>
+						{% endif %}
+					</td>
+					<td>
+						{% if addDetailLink is defined and addDetailLink %}
+							<a style="display:inline-block;" href="{{ detailURL }}">{{ client.Firma  | html | raw  }}</a>
+						{% else %}
+							<span>{{ client.Firma  | html | raw }}</span>
+						{% endif %}
+					</td>
+					<td>
+						{% if addDetailLink is defined and addDetailLink %}
+							<a style="display:inline-block;" href="{{ detailURL }}">{{ client.name | html | raw  }}</a>
+						{% else %}
+							<span>{{ client.name  | html | raw }}</span>
+						{% endif %}
+					</td>
+					<td>
+						{% if addDetailLink is defined and addDetailLink %}
+							<a style="display:inline-block;" href="{{ detailURL }}">{{ client.vorname | html | raw  }}</a>
+						{% else %}
+							<span>{{ client.vorname  | html | raw }}</span>
+						{% endif %}
+					</td>
+					
+					{# <td class="no-print">mut</td>
+					<td class="no-print"><span class="fa fa-pie-chart" data-tip="Kundenstatistik<br />für Kunden Nr. {{ client.kundenid }}<br /> abrufen"></span></td>  #}
+					{% include '/admin/partials/clients/crud-buttons-cell.html.twig' with {'client': client} %}
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>
+{#
+<div class="pz-clients-grid last pz-footer-grid">
+	{{ buildIppDropDown(ipp, 10, 10, 100) }}
+	
+	{{ buildPaginationCount(ipp, clientCount) }}
+	{% include '/admin/partials/clients/pagination.html.twig' with {
+		'currentPage': currentPage,
+		'ipp': ipp,
+		'clientCount': clientCount,
+	} %}
+</div>
+#}

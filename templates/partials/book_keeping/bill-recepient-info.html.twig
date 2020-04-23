@@ -1,0 +1,20 @@
+<div class="client-info-empty-left print-only"></div>
+<div id="Empfaenger" class="client-info-right">
+	<div class="pz-bill-client-info-box">
+		{% if billData.Firma | trim %}
+			{# H3 IS NO LONGER REQUIRE JUST DROP IT... THE <ARTICLE /> SUFFICES... #}
+			{# <article class="pz-client-company-box"><h3>{{ billData.Firma | html | raw }}</h3></article></article> #}
+			<article class="pz-client-company-box">{{ billData.Firma | html | raw }}</article>
+		{% endif %}
+		{% if billData.vorname or billData.name %}
+			<div class="pz-recipient-name">
+				{% if billData.Geschlecht_praefix | trim %}
+					<article class="pz-recipient-slot pz-rcp-prefix"><span class="pz-salutation">{{ billData.Geschlecht_praefix }}</span></article>
+				{% endif %}
+				<article class="pz-recipient-slot pz-rcp-name"><span class="pz-full-name">{{ billData.vorname | html | raw }} {{ billData.name  | html | raw }}</span></article>
+			</div>
+		{% endif %}
+		<article class="pz-recipient-slot pz-rcp-address"><span class="pz-address">{{ billData.Strasse | html | raw  }} {{ billData.Strassennummer | html | raw  }}</span></article>
+		<article class="pz-recipient-slot pz-rcp-zip-city"><span class="pz-zip-city">{{ billData.PLZ | html | raw  }} {{ billData.Ort | html | raw  }}</span></article>
+	</div>
+</div>

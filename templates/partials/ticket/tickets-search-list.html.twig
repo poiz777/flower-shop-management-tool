@@ -1,0 +1,55 @@
+<div class="table-responsive">
+	<table class="table table-bordered table-striped table-hover">
+		<thead class="pz-clients-thead first pz-tbl-heading">
+		<tr class="pz-clients-thead-row first pz-tbl-heading-row">
+			<th>ID</th>
+			<th>Betref</th>
+			<th style="width:20%;">Firmen / Kundename</th>
+			<th>Termi.</th>
+			<th>Zeit</th>
+			<th>Ver.</th>
+			<th>Typ</th>
+			<th>Status</th>
+			{#<th>Prioritat</th> #}
+			<th style="width:12%;">Actions</th>
+		</tr>
+		</thead>
+		<tbody class="pz-clients-tbl-body pz-tbl-tbody">
+			{% for ticket in tickets %}
+				<tr class="pz-clients-tbody-row pz-tbl-tbody-row">
+					<td>{{ ticket.ticket_id }}</td>
+					<td>{{ ticket.ticket_header }}</td>
+					<td>
+						{% if ticket.client %}
+							{{ getTicketTargetClient (ticket.client) }}
+						{% endif %}
+					</td>
+					<td>{{ ticket.ticket_endtermin | swissDate }}</td>
+					<td>{{ ticket.ticket_zeit | hourMinute }}</td>
+					<td>{{ getPersonByID(ticket.ticket_MA_verantwortung) }}</td>
+					<td>{{ ticketTypeStringFromID(ticket.ticket_typ) }}</td>
+					<td><span class="fa fa-circle pz-ticket-status-{{ ticket.ticket_status }}"
+					          data-tip="Status:<br><span class='pz-ticket-status-{{ ticket.ticket_status }}'>{{ ticketStatusStringFromID(ticket.ticket_status) }}</span>"
+						></span>&nbsp;{{ ticketStatusStringFromID(ticket.ticket_status) }}</td>
+					{# <td>{{ ticket.ticketPrio }}</td> #}
+					<td>
+						<div class="pz-crud-buttons">
+							<a class="pz-crud-icon pz-edit"
+							   href="{{ path('rte_admin_ticket_detail', {"id": ticket.ticket_id}) }}">
+								<span class="fa fa-pencil"
+								      data-tip="Ticket Nr. {{ ticket.ticket_id }}<br/><strong style='color:darkgreen;'>bearbeiten</strong>"></span>
+							</a>
+							<a class="pz-crud-icon pz-delete"
+							   data-warn-b4-delete="1"
+							   data-delete-question="Möchtest Du wirklich das Ticket Nr.  {{ ticket.ticket_id }} <strong style='color:red'>entfernen?</strong>"
+							   href="{{ path('rte_admin_delete_ticket', {"id": ticket.ticket_id}) }}">
+								<span class="fa fa-trash"
+								      data-tip="Ticket Nr. {{ ticket.ticket_id }}<br/><strong style='color:red;'>entfernen</strong>"></span>
+							</a>
+						</div>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>

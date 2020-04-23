@@ -1,0 +1,44 @@
+<div class="table-responsive">
+	<table class="table table-bordered table-striped table-hover">
+		<thead class="pz-clients-thead first pz-tbl-heading">
+		<tr class="pz-clients-thead-row first pz-tbl-heading-row">
+			<th>Datum</th>
+			<th>Münstergasse</th>
+			<th>Hirschengraben</th>
+			<th>Extern</th>
+			<th>Total</th>
+			<th>Bemerkungen</th>
+		</tr>
+		</thead>
+		<tbody class="pz-clients-tbl-body pz-tbl-tbody">
+		{% set mgTimeTotal  = 0 %}
+		{% set hgTimeTotal  = 0 %}
+		{% set extTimeTotal = 0 %}
+		{% set allTimeTotal = 0 %}
+		{% for entry in workload %}
+			{% set mgTimeTotal  = mgTimeTotal  + entry.Arbeitszeit_std_mg %}
+			{% set hgTimeTotal  = hgTimeTotal  + entry.Arbeitszeit_std_hg %}
+			{% set extTimeTotal = extTimeTotal + entry.Arbeitszeit_std_extern %}
+			{% set tempTotal    = entry.Arbeitszeit_std_mg + entry.Arbeitszeit_std_hg + entry.Arbeitszeit_std_extern %}
+			{% set allTimeTotal = allTimeTotal + tempTotal %}
+			{# {% set allTimeTotal = allTimeTotal + entry.Arbeitszeit_std_total %} #}
+			<tr class="pz-clients-tbody-row pz-tbl-tbody-row">
+				<td>{{ entry.Arbeitszeit_date | date("d.m.Y") }}</td>
+				<td>{{ entry.Arbeitszeit_std_mg }}</td>
+				<td>{{ entry.Arbeitszeit_std_hg }}</td>
+				<td>{{ entry.Arbeitszeit_std_extern }}</td>
+				<td>{{ tempTotal }}</td>
+				<td>{{ entry.Arbeitszeit_kommentar | html | raw }}</td>
+			</tr>
+		{% endfor %}
+		<tr class="pz-clients-tbody-row pz-tbl-tbody-row">
+			<td><strong>Total</strong></td>
+			<td><strong>{{ mgTimeTotal | number_format(2, '.', "'") }}</strong></td>
+			<td><strong>{{ hgTimeTotal | number_format(2, '.', "'") }}</strong></td>
+			<td><strong>{{ extTimeTotal | number_format(2, '.', "'") }}</strong></td>
+			<td><strong>{{ allTimeTotal | number_format(2, '.', "'") }}</strong></td>
+			<td>&nbsp;</td>
+		</tr>
+		</tbody>
+	</table>
+</div>

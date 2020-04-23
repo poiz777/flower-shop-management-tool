@@ -1,0 +1,29 @@
+{% block top_css_block %}
+    <style>
+        .pz-delete-item,
+        span.fa.fa-trash.pz-delete-item {
+            font-size: 1.5em;
+            /* color: rgb(95, 0, 143); */
+        }
+    </style>
+{% endblock  %}
+{% if clientID %}
+    <a class="pz-page-title"
+       data-warn-b4-delete="1"
+       data-tip="KundenNr. {{ clientID }}<br /><strong style='color:red'>löschen.</strong>"
+       data-delete-question="Möchtest Du diesen Kunden mit ID: {{ clientID }} wirklich <strong style='color:red'>löschen?</strong>"
+       href="{{ path('rte_admin_delete_client', {'id': clientID}) }}"
+       style="display: inline-block;margin-bottom: 15px;font-size: 12px;" >
+        <span class="fa fa-trash pz-delete-item"></span> «KundenNr - {{ clientID }}» sofort löschen
+    </a>
+{% endif %}
+{% if ticketID is defined and ticketID %}
+    <a class="pz-page-title"
+       data-warn-b4-delete="1"
+       data-tip="Ticket Nr. {{ ticketID }}<br /><strong style='color:red'>löschen.</strong>"
+       data-delete-question="Möchtest Du dieser Ticket Nr. {{ ticketID }} wirklich <strong style='color:red'>löschen?</strong>"
+       href="{{ path('rte_admin_delete_ticket', {'id': ticketID}) }}"
+       style="display: inline-block;margin-bottom: 15px;font-size: 12px;" >
+        <span class="fa fa-trash pz-delete-item"></span> «TicketNr. - {{ ticketID }}» sofort löschen
+    </a>
+{% endif %}

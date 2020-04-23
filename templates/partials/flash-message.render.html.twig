@@ -1,0 +1,11 @@
+<section class="pz-message-block no-print">
+    <!-- ERROR BLOCK -->
+    {% for label, messages in app.flashes(['warning', 'success', 'danger',  'error', 'security']) %}
+        {% for message in messages %}
+            {% set label = ( label == 'error') ? 'danger' : label %}
+            <div class="alert alert-{{ label }}">
+                {{ message | html }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+</section>

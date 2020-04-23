@@ -1,0 +1,138 @@
+.pz-drop-down-wrapper {
+    display: block;
+    margin: 0;
+    width: 100%; /*19.2em;*/
+    clear: both;
+    padding: 0
+}
+
+.pz-drop-down {
+    position: relative;
+    /*display: inline-block*/
+}
+
+.form-control.pz-form-widget {
+    height: 50px;
+    width: 100%; /*19.2em;*/
+    outline: none;
+    font-size: 1.25em;
+    padding: 5px 55px 5px 10px;
+    font-weight: 300;
+    letter-spacing: .05em;
+    line-height: 1.42857143;
+    color: #af6e29;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #d8bc9f;
+}
+
+.pz-drop-down-indicator {
+    display: inline-block;
+    position: absolute;
+    top: 1px;
+    right: 0;
+    padding: 8px 15px 8px 15px;
+    background: #757575;
+    border-left: 1px solid rgba(255, 255, 255, 0.29);
+    cursor: pointer;
+    transition: all 0.5s;
+    color:white;
+}
+
+.pz-drop-down-indicator:hover {
+    background: #0d0d0d;
+    color: white;
+    text-shadow: 0 1px 1px black;
+}
+
+.pz-drop-down-indicator:before{
+    content: "\f107";
+    font-family: FontAwesome;
+    font-size: 16px;
+}
+.pz-arrow-down {
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #ffffff;
+    border-top: 6px solid #464646;
+    display: none;
+    /*border-top: 6px solid #d0b496;*/
+}
+
+input.pz-suggestion-input {
+    border: none;
+    background: transparent;
+    font-size: 1.25em;
+    font-weight: 300;
+    outline: none;
+    padding: 10px;
+    display: block;
+    width: 100%;
+    color: #424242;
+    box-sizing: border-box;
+    user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+    transition: all .35s;
+    cursor: pointer
+}
+
+.pz-suggestion-input:hover {
+    /*background: rgba(255, 165, 0, .5);
+    background: rgba(249, 115, 238, 0.31);*/
+    background: rgba(213, 213, 213, 0.5);
+}
+
+.pz-suggestion-input:focus {
+    background: #90ee90
+}
+
+.pz-suggestion-input.pz-is-selected{
+    background: lightgreen !important;
+    cursor: default;
+}
+
+
+.pz-child-suggestion-box {
+    border-bottom: 1px solid rgba(88, 88, 88, 0.32);
+}
+
+.pz-child-suggestion-box:last-child {
+    border-bottom: none
+}
+
+.pz-drop-down-children {
+    background: rgba(239, 239, 239, 0.91);
+    border: 1px solid rgba(144, 144, 144, 0.32);
+    border-top: none;
+    max-height: 184px;
+    overflow: auto;
+    display: block;
+    position: absolute;
+    z-index: 999;
+    width: calc(100% - 20px);
+}
+
+.pz-drop-down-children.pz-hide {
+    display: none
+}
+
+.pz-drop-down-children.pz-show {
+    display: block
+}
+
+
+.pz-child-suggestion-box.pz-null-action-box input.pz-suggestion-input{
+    background: #d0d0d0;
+    cursor: default;
+}
+.pz-child-suggestion-box.pz-null-action-box input.pz-suggestion-input:hover{
+    background: #d0d0d0;
+}
+
+

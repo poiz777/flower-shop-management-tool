@@ -1,0 +1,45 @@
+
+<div class="pz-grid-2-cols-wrapper pz-client-v-card-wrapper">
+	<div class="">
+		
+		{% if clientData.Firma is defined and clientData.Firma %}
+			<aside class="pz-client-info-strip pz-client-company-block">
+				{{ clientData.Firma | html | raw }}
+			</aside>
+		{% endif %}
+		
+		{% if clientData.vorname or clientData.name %}
+			<aside class="pz-client-info-strip pz-client-name-block">
+				{% if clientData.mrMrs is defined and clientData.mrMrs.Geschlecht_id != 3 %}
+					<article class="pz-recipient-slot pz-rcp-prefix"><span class="pz-salutation">{{ clientData.mrMrs.Geschlecht_name }}</span></article>
+				{% endif %}
+				<article class="pz-recipient-slot pz-rcp-name"><span class="pz-full-name">{{ clientData.vorname | html | raw }} {{ clientData.name  | html | raw }}</span></article>
+			</aside>
+		{% endif %}
+		
+		{% if clientData.Strasse or clientData.Strassennummer %}
+			<article class="pz-recipient-slot pz-rcp-address"><span class="pz-address">{{ clientData.Strasse | html | raw  }} {{ clientData.Strassennummer | html | raw  }}</span></article>
+		{% endif %}
+		
+		{% if clientData.PLZ or clientData.Ort %}
+			<article class="pz-recipient-slot pz-rcp-zip-city"><span class="pz-zip-city">{{ clientData.PLZ | html | raw  }} {{ clientData.Ort | html | raw  }}</span></article>
+		{% endif %}
+		
+		{% if clientData.Telefon is defined and clientData.Telefon %}
+			<article class="pz-recipient-slot pz-rcp-prefix"><span class="pz-telephone"><span class="pz-micro-sized-width">T:</span>{{ clientData.Telefon }}</span></article>
+		{% endif %}
+		
+		{% if clientData.Handy is defined and clientData.Handy %}
+			<article class="pz-recipient-slot pz-rcp-prefix"><span class="pz-mobile"><span class="pz-micro-sized-width">H:</span>{{ clientData.Handy }}</span></article>
+		{% endif %}
+		
+		{% if clientData.EMail is defined and clientData.EMail %}
+			<article class="pz-recipient-slot pz-rcp-prefix"><span class="pz-email"><span class="pz-micro-sized-width">M:</span>{{ clientData.EMail }}</span></article>
+		{% endif %}
+		
+		{% if clientData.Website is defined and clientData.Website %}
+			<article class="pz-recipient-slot pz-rcp-prefix"><span class="pz-website"><span class="pz-micro-sized-width">W:</span><a href="{{ clientData.Website }}" target="_blank">{{ clientData.Website }}</a></span></article>
+		{% endif %}
+	</div>
+</div>
+

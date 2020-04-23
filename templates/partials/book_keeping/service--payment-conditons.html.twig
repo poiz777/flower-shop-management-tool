@@ -1,0 +1,9 @@
+<!-- Conditions: -->
+{% set cssClass = printOnly is defined and printOnly ? 'print-only' : 'no-print' %}
+{% if billData.Rechnung_konditionen is defined %}
+    <div class="{{ cssClass }}">{{ billData.Rechnung_konditionen | html | raw }}</div>
+{% endif  %}
+{% if billData.Rechnung_dank is defined %}
+    <div class="{{ cssClass }}" style="margin-top:10px;">{{ billData.Rechnung_dank | html | raw }}</div>
+{% endif %}
+<!-- Conditions: -->

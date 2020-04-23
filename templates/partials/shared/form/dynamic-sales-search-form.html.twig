@@ -1,0 +1,65 @@
+{% if formWidgets %}
+	{% block top_css_block %}
+		<style>
+			.pz-grid-2-cols-wrapper form{
+				background: rgba(210, 210, 210, 0.2);
+				padding: 10px 30px 0px 30px;
+				border: solid 1px rgba(161, 161, 161, 0.2);
+				border-radius: 0;
+				margin-bottom: 15px;
+			}
+			
+			.pz-form-widget.btn.btn-primary{
+				color: #ffffff;
+				padding: 5px 5px;
+				text-shadow: none;
+				height: 42px;
+				font-size: 1.1em;
+			}
+			
+			.pz-form-widget.btn.pz-grid-right{
+				grid-column: 3 / 4;
+				display: inline-block;
+				height: 60px;
+				width: 60%;
+				justify-self: right;
+			}
+			
+			.pz-form-widget.btn.pz-grid-right .fa {
+				font-size: 1.5em;
+			}
+			.pz-view-raw-pass-toggle {
+				display: inline-block;
+				margin-top: -15px;
+				font-size: 1.25em;
+			}
+			
+			input.form-control{
+				width: 100%;
+				height: 40px;
+				border: NONE;
+				font-weight: 300;
+				letter-spacing: 0.05em;
+				font-size: 1.25em;
+				color: black;
+				border-bottom: solid 1px rgba(167, 167, 167, 0.5);
+				border-top: solid 1px rgba(167, 167, 167, 0.5);
+				border-radius: 0;
+				outline: none;
+			}
+		</style>
+	{% endblock %}
+		{% set btnClass="pz-grid-right" %}
+		{% set addButton = addButton is defined ? addButton :  true %}
+		{% if wrap is defined %} {% set btnClass="" %}<div class="{{ wrap }}">{% endif %}
+		{% for formWidget in  formWidgets %}
+			<div class='form-group'>{{ formWidget.render | raw }}</div>
+		{% endfor %}
+		<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" >
+		<!-- CSRF TOKEN -->
+			{% if addButton %}
+				<button type='submit' class='btn btn-primary pz-form-widget {{ btnClass }}'>
+					<span class="fa fa-paper-plane"></span> &nbsp;&nbsp;{{ btnText }}</button>
+			{% endif %}
+		{% if wrap is defined %} </div>{% endif %}
+{% endif %}

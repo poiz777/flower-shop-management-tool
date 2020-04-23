@@ -1,0 +1,8 @@
+{% set clientName = ""  %}
+{% if data.Firma %}
+	{% set clientName = data.Firma %}
+	{% set clientName = data.name or data.vorname ? "#{clientName} [ #{data.vorname} #{data.name} ]": clientName %}
+{% else %}
+	{% set clientName = data.name or data.vorname ? "#{data.vorname} #{data.name}": clientName %}
+{% endif %}
+{{ clientName }}
